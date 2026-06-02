@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f3eb" />
+    <title>Whisk — Reel to Recipe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="Whisk home">
+          <span class="brand-mark">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M9.4 4.8c-.8 7.4 1.2 11.1 6.6 13.8 5.4-2.7 7.4-6.4 6.6-13.8" />
+              <path d="M16 18.5v8.7" />
+              <path d="M11.8 27.2h8.4" />
+              <path d="M12.2 7.7c2.3 1.4 5.3 1.4 7.6 0" />
+            </svg>
+          </span>
+          <span>whisk</span>
+        </a>
+        <div class="header-actions">
+          <span class="api-status" id="api-status"><span class="status-dot"></span><span>Checking AI</span></span>
+          <button class="icon-button" id="saved-button" type="button" aria-label="Saved recipes">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.8A1.8 1.8 0 0 1 7.8 3h8.4A1.8 1.8 0 0 1 18 4.8v16l-6-3.5-6 3.5z" /></svg>
+            <span class="saved-badge" id="saved-badge" hidden></span>
+          </button>
+          <button class="profile-button" type="button" aria-label="Profile">C</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" id="hero">
+          <div class="hero-copy">
+            <p class="eyebrow"><span></span> Your cooking co-pilot</p>
+            <h1>Turn any food video<br /><em>into a recipe.</em></h1>
+            <p class="hero-subtitle">
+              Drop a Reel or YouTube link. Whisk reads the clues,<br />
+              rebuilds the dish, and writes the steps for your kitchen.
+            </p>
+          </div>
+
+          <div class="input-card">
+            <form id="recipe-form">
+              <label for="video-url">Paste your food video</label>
+              <div class="url-row">
+                <span class="url-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M10.5 13.5a4 4 0 0 0 5.7.1l2.3-2.3a4 4 0 0 0-5.6-5.7l-1.4 1.3" />
+                    <path d="M13.5 10.5a4 4 0 0 0-5.7-.1l-2.3 2.3a4 4 0 0 0 5.6 5.7l1.4-1.3" />
+                  </svg>
+                </span>
+                <input
+                  id="video-url"
+                  name="url"
+                  type="url"
+                  placeholder="instagram.com/reel/... or youtube.com/watch?v=..."
+                  autocomplete="url"
+                />
+                <button class="analyze-button" id="analyze-button" type="submit">
+                  <span>Make my recipe</span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                </button>
+              </div>
+              <div class="form-tools">
+                <label class="attach-button" for="clip-input">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m0 0L8 7m4-4 4 4" /><path d="M5 13v5a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-5" /></svg>
+                  <span id="clip-label">Attach clip only if the platform blocks access</span>
+                  <input id="clip-input" type="file" accept="video/*" />
+                </label>
+                <button class="notes-button" id="notes-toggle" type="button">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h10" /></svg>
+                  Add extra notes
+                </button>
+              </div>
+              <div class="notes-wrap" id="notes-wrap" hidden>
+                <textarea
+                  id="notes"
+                  placeholder="Optional: add anything the captions may miss, such as an ingredient shown only on screen..."
+                  maxlength="12000"
+                ></textarea>
+              </div>
+              <p class="local-ai-note">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 7 3v5c0 4.5-3 8.6-7 10-4-1.4-7-5.5-7-10V6z" /><path d="m9 12 2 2 4-4" /></svg>
+                Free local AI. Downloaded clips are sampled locally, then deleted.
+                <button id="setup-ai-button" type="button">Set up local AI</button>
+              </p>
+              <div class="accuracy-callout">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
+                <span><strong>Automatic visual review:</strong> Whisk downloads the public video, inspects ten frames locally, and also checks captions. Attach a saved clip only when the platform blocks access.</span>
+              </div>
+            </form>
+            <div class="examples-row">
+              <span>Need inspiration?</span>
+              <button class="example-chip" type="button" data-demo="hot-honey">Try the hot honey chicken sample</button>
+            </div>
+          </div>
+
+          <div class="proof-row" aria-label="Features">
+            <div>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
+              <span>AI-built instructions</span>
+            </div>
+            <div>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 1.6 6.4L20 10l-6.4 1.6L12 18l-1.6-6.4L4 10l6.4-1.6z" /></svg>
+              <span>Smart ingredient estimates</span>
+            </div>
+            <div>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v16H7z" /><path d="M10 8h4M10 12h4M10 16h2" /></svg>
+              <span>Kitchen-ready format</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="analyzing-view" id="analyzing-view" hidden>
+          <div class="scan-visual">
+            <div class="scan-card">
+              <div class="scan-video">
+                <div class="scan-food">
+                  <span class="plate"></span>
+                  <span class="tender tender-a"></span>
+                  <span class="tender tender-b"></span>
+                  <span class="tender tender-c"></span>
+                  <span class="sauce sauce-a"></span>
+                  <span class="sauce sauce-b"></span>
+                </div>
+                <div class="scan-line"></div>
+              </div>
+              <span class="scan-pill"><i></i> Reading your video</span>
+            </div>
+          </div>
+          <p class="eyebrow"><span></span> Whisk AI is cooking</p>
+          <h2>Rebuilding the recipe…</h2>
+          <p id="analysis-message">Looking for ingredients and techniques in the video.</p>
+          <div class="progress-track"><div id="progress-fill"></div></div>
+        </section>
+
+        <section class="recipe-view" id="recipe-view" hidden>
+          <button class="back-button" id="back-button" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+            Analyze another video
+          </button>
+
+          <div class="recipe-header">
+            <div>
+              <p class="eyebrow"><span></span> Your recipe is ready</p>
+              <h2 id="recipe-title"></h2>
+              <p class="recipe-summary" id="recipe-summary"></p>
+              <div class="tag-row" id="tag-row"></div>
+            </div>
+            <div class="recipe-actions">
+              <button class="secondary-action" id="copy-button" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z" /><path d="M4 15V5a2 2 0 0 1 2-2h10" /></svg>
+                Copy recipe
+              </button>
+              <button class="save-action" id="save-button" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.8A1.8 1.8 0 0 1 7.8 3h8.4A1.8 1.8 0 0 1 18 4.8v16l-6-3.5-6 3.5z" /></svg>
+                Save
+              </button>
+            </div>
+          </div>
+
+          <div class="recipe-meta">
+            <div><small>Total time</small><strong id="recipe-time"></strong></div>
+            <div><small>Servings</small><strong id="recipe-servings"></strong></div>
+            <div><small>Difficulty</small><strong id="recipe-difficulty"></strong></div>
+            <div><small>AI confidence</small><strong id="recipe-confidence"></strong></div>
+          </div>
+
+          <div class="confidence-card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 7 3v5c0 4.5-3 8.6-7 10-4-1.4-7-5.5-7-10V6z" /><path d="m9 12 2 2 4-4" /></svg>
+            <div><strong>How Whisk read this video</strong><p id="confidence-note"></p></div>
+          </div>
+          <div class="grounding-card">
+            <div class="grounding-title">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v14H5z" /><path d="m8 12 2.5 2.5L16 9" /></svg>
+              <strong>Grounding report</strong>
+            </div>
+            <p id="evidence-summary"></p>
+            <p class="visual-report" id="visual-report" hidden></p>
+            <p class="transcript-report" id="transcript-report" hidden></p>
+            <div id="assumptions-wrap">
+              <small>Estimated details to review</small>
+              <ul id="assumption-list"></ul>
+            </div>
+          </div>
+
+          <div class="recipe-grid">
+            <aside class="ingredients-panel">
+              <div class="section-heading">
+                <div><p>Shopping list</p><h3>Ingredients</h3></div>
+                <button class="tiny-action" id="check-all-button" type="button">Check all</button>
+              </div>
+              <div id="ingredient-list"></div>
+            </aside>
+
+            <section class="steps-panel">
+              <div class="section-heading">
+                <div><p>Cook along</p><h3>Step-by-step</h3></div>
+                <span class="step-count" id="step-count"></span>
+              </div>
+              <div class="steps-list" id="steps-list"></div>
+            </section>
+          </div>
+
+          <div class="recipe-footer-grid">
+            <section class="info-panel">
+              <p class="panel-kicker">Easy swaps</p>
+              <h3>Substitutions</h3>
+              <div id="substitution-list"></div>
+            </section>
+            <section class="info-panel tip-panel">
+              <p class="panel-kicker">From the test kitchen</p>
+              <h3>Little things that help</h3>
+              <ul id="tips-list"></ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="saved-view" id="saved-view" hidden>
+          <button class="back-button" id="saved-back-button" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+            Back to Whisk
+          </button>
+          <div class="saved-header">
+            <div>
+              <p class="eyebrow"><span></span> Your kitchen notebook</p>
+              <h2>Saved recipes</h2>
+              <p>Keep the recipes worth making again. Everything is stored privately in this browser.</p>
+            </div>
+            <button class="save-action" id="saved-new-button" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              Make a new recipe
+            </button>
+          </div>
+          <div class="saved-toolbar">
+            <strong id="saved-count">0 recipes saved</strong>
+            <span>Stored on this device</span>
+          </div>
+          <div class="saved-grid" id="saved-grid"></div>
+          <div class="saved-empty" id="saved-empty" hidden>
+            <span class="empty-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.8A1.8 1.8 0 0 1 7.8 3h8.4A1.8 1.8 0 0 1 18 4.8v16l-6-3.5-6 3.5z" /></svg>
+            </span>
+            <h3>Your notebook is ready.</h3>
+            <p>Save a recipe after Whisk rebuilds it and it will appear here.</p>
+            <button class="save-action" id="saved-empty-button" type="button">Make your first recipe</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="modal-backdrop" id="error-modal" hidden>
+      <div class="modal">
+        <button class="modal-close" id="modal-close" type="button" aria-label="Close">×</button>
+        <span class="modal-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v5m0 3h.01" /><path d="M10.3 3.6 2.7 17a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0z" /></svg>
+        </span>
+        <h3 id="modal-title">One quick setup step</h3>
+        <p id="modal-message"></p>
+        <code class="modal-command" id="modal-command" hidden></code>
+        <div class="modal-actions">
+          <a class="secondary-action" id="ollama-download" href="https://ollama.com/download" target="_blank" rel="noreferrer" hidden>Install Ollama</a>
+          <button class="secondary-action" id="modal-copy-command" type="button" hidden>Copy setup command</button>
+          <button class="save-action" id="modal-demo" type="button">Try the sample recipe</button>
+          <button class="secondary-action" id="modal-dismiss" type="button">Got it</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
